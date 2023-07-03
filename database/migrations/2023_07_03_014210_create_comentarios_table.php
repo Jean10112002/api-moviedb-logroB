@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('comentarios', function (Blueprint $table) {
             $table->id();
-            $table->int('pelicula_id');
+            $table->integer('pelicula_id');
             $table->string('comentario');
             $table->foreignId('user_id')
             ->constrained('users')

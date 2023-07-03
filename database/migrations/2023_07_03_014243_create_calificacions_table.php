@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('calificacions', function (Blueprint $table) {
             $table->id();
-            $table->int('pelicula_id');
-            $table->int('calificacion');
+            $table->integer('pelicula_id');
+            $table->integer('calificacion');
             $table->foreignId('user_id')
             ->constrained('users')
             ->cascadeOnDelete()
