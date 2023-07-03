@@ -45,9 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function Seguidos(): HasMany
+    {
+        return $this->hasMany(Seguidor::class,'user_seguidor_id');
+    }
     public function Seguidores(): HasMany
     {
-        return $this->hasMany(Seguidor::class,'user_seguidor_id','id');
+        return $this->hasMany(Seguidor::class,'user_seguido_id');
     }
     public function Favoritos(): HasMany
     {

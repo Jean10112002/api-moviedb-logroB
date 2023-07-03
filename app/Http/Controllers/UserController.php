@@ -123,7 +123,7 @@ class UserController extends Controller
     public function show($user_id)
     {
         try {
-            $user = User::find($user_id);
+            $user = User::with('Seguidores','Seguidos','Seguidores.UsuarioSeguidor','Seguidos.UsuarioSeguido')->where('id','=',$user_id)->get();
             return response()->json([
                 "user" => $user
             ]);

@@ -25,6 +25,7 @@ Route::group(['middleware' => ["auth:sanctum"]], function (){
     Route::controller(UserController::class)->group(function () {
         Route::get('auth/user-profile', 'userProfile');
         Route::post('auth/logout',  'logout');
+        Route::get('user/{id}',  'show');
     });
     Route::apiResource('favorito',FavoritoController::class)->only('store','destroy','index');
     Route::apiResource('interaccion',SeguidorController::class)->only('store','destroy','index');
