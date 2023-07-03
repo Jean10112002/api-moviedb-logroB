@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function Seguidores(): HasMany
     {
-        return $this->hasMany(Seguidor::class);
+        return $this->hasMany(Seguidor::class,'user_seguidor_id','id');
     }
     public function Favoritos(): HasMany
     {

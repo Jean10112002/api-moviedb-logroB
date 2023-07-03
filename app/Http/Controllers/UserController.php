@@ -43,17 +43,17 @@ class UserController extends Controller
             $messages = $validator->messages();
             return response()->json(["message" => $messages], 500);
         }
-        $email=User::where("email", "=", $request->email)->first();
-        if($email){
+        $email = User::where("email", "=", $request->email)->first();
+        if ($email) {
             return response()->json([
-                "message"=>"Email ya existente"
-            ],500);
+                "message" => "Email ya existente"
+            ], 500);
         }
-        $nickname=User::where("nickname", "=", $request->nickname)->first();
-        if($nickname){
+        $nickname = User::where("nickname", "=", $request->nickname)->first();
+        if ($nickname) {
             return response()->json([
-                "message"=>"Nickanme ya existente"
-            ],500);
+                "message" => "Nickanme ya existente"
+            ], 500);
         }
         $user = new User();
         $user->nickname = $request->nickname;
@@ -75,7 +75,7 @@ class UserController extends Controller
             return response()->json(["message" => $messages], 500);
         }
 
-         $user = User::where("email", "=", $request->email)->first();
+        $user = User::where("email", "=", $request->email)->first();
         if (isset($user->id)) {
             if (Hash::check($request->password, $user->password)) {
                 //creamos el token
@@ -85,24 +85,24 @@ class UserController extends Controller
 
                     "message" => "¡Usuario logueado exitosamente!",
                     "access_token" => $token
-                ],200);
-            }  else {
+                ], 200);
+            } else {
+                return response()->json([
+                    "status" => 0,
+                    "error" => "credenciales incorrectas",
+                ], 500);
+            }
+        } else {
             return response()->json([
                 "status" => 0,
-                "error" => "credenciales incorrectas",
-            ], 500);
+                "error" => "Usuario no registrado",
+            ], 404);
         }
-    }else{
-        return response()->json([
-            "status" => 0,
-            "error" => "Usuario no registrado",
-        ], 404);
     }
-}
 
     public function userProfile()
     {
-        $usuario=Auth::guard('sanctum')->user();
+        $usuario = Auth::guard('sanctum')->user();
 
         return response()->json([
             "message" => "Acerca del perfil de usuario",
@@ -113,11 +113,23 @@ class UserController extends Controller
 
     public function logout()
     {
-       /*  auth()->user()->tokens()->delete(); */
-       Auth::guard('sanctum')->user()->tokens()->delete();
+        /*  auth()->user()->tokens()->delete(); */
+        Auth::guard('sanctum')->user()->tokens()->delete();
         return response()->json([
             "status" => 1,
             "message" => "Cierre de Sesión",
         ]);
+    }
+    public function show($user_id)
+    {
+        try {
+            $user = User::find($user_id);
+            return response()->json([
+                "user" => $user
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+
+        }
     }
 }

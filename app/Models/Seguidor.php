@@ -11,8 +11,12 @@ class Seguidor extends Model
     use HasFactory;
     public $timestamps=false;
     protected $fillable=["user_seguidor_id","user_seguido_id"];
-    public function Usuario(): BelongsTo
+    public function UsuarioSeguido(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_seguido_id');
+    }
+    public function UsuarioSeguidor(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_seguidor_id');
     }
 }

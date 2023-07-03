@@ -13,6 +13,6 @@ class Calificacion extends Model
     protected $fillable=["user_id","pelicula_id",'calificacion'];
     public function Usuario(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 }
